@@ -1,4 +1,5 @@
-import { apiPrefix } from '@/config'
+import { Message } from '@arco-design/web-vue'
+import { apiPrefix, httpCode } from '@/config'
 
 // 1.超时时间为100s
 const TIME_OUT = 100000
@@ -16,8 +17,8 @@ const baseFetchOptions = {
 
 // 3.fetch参数类型
 type FetchOptionType = Omit<RequestInit, 'body'> & {
-  params?: Record<string, string | number | boolean>
-  body?: BodyInit | Record<string, unknown> | null
+  params?: Record<string, any>
+  body?: BodyInit | Record<string, any> | null
 }
 
 // 4.封装基础的fetch请求
@@ -67,10 +68,17 @@ const baseFetch = <T>(url: string, fetchOptions: FetchOptionType): Promise<T> =>
     new Promise((resolve, reject) => {
       globalThis
         .fetch(urlWithPrefix, options as RequestInit)
-        .then((res) => {
-          resolve(res.json())
+        .then(async (res) => {
+          const json = await res.json()
+          if (json.code === httpCode.success) {
+            resolve(json)
+          } else {
+            Message.error(json.message)
+            reject(new Error(json.message))
+          }
         })
         .catch((err) => {
+          Message.error(err.message)
           reject(err)
         })
     }),
