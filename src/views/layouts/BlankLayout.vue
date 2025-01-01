@@ -1,4 +1,8 @@
-<script lang="ts"></script>
+<script lang="ts">
+export default {
+  name: 'BlankLayout',
+}
+</script>
 
 <template>
   <div>
