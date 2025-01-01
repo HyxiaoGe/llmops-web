@@ -6,7 +6,6 @@ export default {
 
 <template>
   <div>
-    <nav>侧边栏</nav>
     <router-view />
   </div>
 </template>
