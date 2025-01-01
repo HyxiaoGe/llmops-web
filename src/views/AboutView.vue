@@ -1,6 +1,8 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <h1>关于我</h1>
+    <a-button type="primary" @click="goHome">返回首页</a-button>
+    <icon-user />
   </div>
 </template>
 
